@@ -6,6 +6,25 @@
             <mat-form-field>
                 <input matInput required placeholder="Email" formControlName="emailCtrl" />
             </mat-form-field>
+
+            <mat-form-field>
+                <input type="text" matInput [matAutocomplete]="auto" placeholder="Priority" formControlName="priorityCtrl" />
+                <mat-autocomplete #auto="matAutocomplete">
+                    <mat-option *ngFor="let priority of filteredPriorities | async" [value]="priority">
+                        {{ priority }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field>
+                <input type="text" matInput [matAutocomplete]="auto2" placeholder="Department" formControlName="departmentCtrl" />
+                <mat-autocomplete #auto2="matAutocomplete" [displayWith]="getDepartmentName">
+                    <mat-option *ngFor="let department of departments" [value]="department">
+                        {{ department.name }}
+                    </mat-option>
+                </mat-autocomplete>
+            </mat-form-field>
+
             <div>
                 <button mat-icon-button matStepperNext>
                     <mat-icon>arrow_forward</mat-icon>
