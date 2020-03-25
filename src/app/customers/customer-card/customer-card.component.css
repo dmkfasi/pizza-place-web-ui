@@ -1,0 +1,18 @@
+.mat-card {
+    max-width: 300pt;
+    margin: auto;
+}
+
+.mat-card-avatar {
+    background-image: url('https://avataaars.io/?avatarStyle=Transparent&topType=ShortHairShortFlat&accessoriesType=Blank&hairColor=Black&facialHairType=MoustacheFancy&facialHairColor=BrownDark&clotheType=BlazerShirt&eyeType=Default&eyebrowType=AngryNatural&mouthType=Serious&skinColor=Pale');
+    background-size: cover;
+    border: solid 1pt;
+}
+
+.mat-card-actions {
+    display: flex;
+}
+
+.mat-card-actions .flex-spacer {
+    width: 100%;
+}

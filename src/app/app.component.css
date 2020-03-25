@@ -5,3 +5,13 @@ mat-drawer-container {
 mat-drawer {
     min-width: 25%;
 }
+
+mat-drawer .mat-button {
+    display: block;
+    width: 100%;
+    text-align: justify;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}

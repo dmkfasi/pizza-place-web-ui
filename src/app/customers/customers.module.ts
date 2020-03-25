@@ -3,13 +3,22 @@ import { CommonModule } from '@angular/common';
 
 import { CustomersRoutingModule } from './customers-routing.module';
 import { CustomerListComponent } from './customer-list/customer-list.component';
+import { CustomerCardComponent } from './customer-card/customer-card.component';
 
+// Material
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
-  declarations: [CustomerListComponent],
+  declarations: [CustomerListComponent, CustomerCardComponent],
   imports: [
     CommonModule,
-    CustomersRoutingModule
+    CustomersRoutingModule,
+
+    MatButtonModule,
+    MatCardModule,
+    MatIconModule
   ]
 })
 export class CustomersModule { }
