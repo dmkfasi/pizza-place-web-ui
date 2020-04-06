@@ -4,6 +4,15 @@ import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
     {
+        path: '',
+        redirectTo: 'pizza',
+        pathMatch: 'full'
+    },
+    {
+        path: 'pizza',
+        loadChildren: () => import('./pizza/pizza.module').then(m => m.PizzaModule)
+    },
+    {
         path: 'customers',
         loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule)
     },
@@ -12,8 +21,8 @@ const routes: Routes = [
         loadChildren: () => import('./orders/orders.module').then(m => m.OrdersModule)
     },
     {
-        path: 'messages',
-        loadChildren: () => import('./messages/messages.module').then(m => m.MessagesModule)
+        path: 'cart',
+        loadChildren: () => import('./cart/cart.module').then(m => m.CartModule)
     },
 ];
 
