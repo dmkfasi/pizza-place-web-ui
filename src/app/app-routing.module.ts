@@ -13,8 +13,8 @@ const routes: Routes = [
         loadChildren: () => import('./pizza/pizza.module').then(m => m.PizzaModule)
     },
     {
-        path: 'customers',
-        loadChildren: () => import('./customers/customers.module').then(m => m.CustomersModule)
+        path: 'customer',
+        loadChildren: () => import('./customer/customer.module').then(m => m.CustomersModule)
     },
     {
         path: 'orders',
