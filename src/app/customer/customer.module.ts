@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CustomerCardComponent } from './customer-card/customer-card.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { CustomerNewComponent } from './customer-new/customer-new.component';
-import { CustomersRoutingModule } from './customers-routing.module';
+import { CustomerRoutingModule } from './customer-routing.module';
 
 // Material
 import { MatButtonModule } from '@angular/material/button';
@@ -17,7 +17,7 @@ import { MatInputModule } from '@angular/material/input';
   declarations: [CustomerListComponent, CustomerCardComponent, CustomerNewComponent],
   imports: [
     CommonModule,
-    CustomersRoutingModule,
+    CustomerRoutingModule,
     FormsModule,
     ReactiveFormsModule,
 
