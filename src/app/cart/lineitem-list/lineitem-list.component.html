@@ -1,1 +1,23 @@
-<p>lineitem-list works!</p>
+<h3>Your Shopping Cart</h3>
+
+<div *ngIf="items.length > 0; else emptyCartBlock">
+    <table class="table-striped mt-1 mb-1">
+        <tr>
+            <th>Item</th>
+            <th>Price</th>
+            <th>Quantity</th>
+        </tr>
+        <tbody>
+            <tr class="cart-item" *ngFor="let item of items">
+                <td>{{ item.name }}</td>
+                <td>{{ item.basePrice }}</td>
+                <td>{{ item.length }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <button class="btn btn-success">Checkout</button>
+</div>
+<ng-template #emptyCartBlock>
+    <p>But for now it's empty.</p>
+    <p>Hey, why don't get your best Pizza <a routerLink="/pizza">here</a>?</p>
+</ng-template>
