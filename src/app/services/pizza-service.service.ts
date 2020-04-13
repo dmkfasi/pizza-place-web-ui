@@ -6,13 +6,16 @@ import { Pizza } from '../interfaces/pizza';
   providedIn: 'root'
 })
 export class PizzaService {
-  baseURL: string = "api/v1/Pizza";
+  private baseURL: string = "http://localhost:8080/api/v1/Pizza";
+  private pizzaProducts: [];
 
   constructor(private http: HttpClient) { }
 
-  getPizzaList()
-  {
-    return this.http.get<Pizza[]>(this.baseURL + "/GetPizzaList");
+  getPizzaList() {
+    return this.http.get<Pizza[]>(this.baseURL);
   }
 
+  getPizzaByName(pizza: string) {
+    return this.http.get<Pizza>(this.baseURL + '/' + pizza);
+  }
 }
