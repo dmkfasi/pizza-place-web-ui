@@ -3,28 +3,15 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { CustomerCardComponent } from './customer-card/customer-card.component';
-import { CustomerListComponent } from './customer-list/customer-list.component';
-import { CustomerNewComponent } from './customer-new/customer-new.component';
 import { CustomerRoutingModule } from './customer-routing.module';
 
-// Material
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-
 @NgModule({
-  declarations: [CustomerListComponent, CustomerCardComponent, CustomerNewComponent],
+  declarations: [CustomerCardComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-
-    MatButtonModule,
-    MatCardModule,
-    MatIconModule,
-    MatInputModule
   ]
 })
 export class CustomersModule { }
