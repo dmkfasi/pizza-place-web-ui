@@ -12,12 +12,12 @@ export class CartService {
 
     addToCart(product) {
 
-        this.itemsCount.id = product.id;
-        this.itemsCount.count += 1;
+        // this.itemsCount.id = product.id;
+        // this.itemsCount.count += 1;
 
         this.items.push(product);
 
-        console.log(this.itemsCount);
+        // console.log(this.itemsCount);
     }
 
     getItems() {
