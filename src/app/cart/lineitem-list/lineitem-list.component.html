@@ -1,21 +1,22 @@
 <h3>Your Shopping Cart</h3>
 
 <div *ngIf="items.length > 0; else emptyCartBlock">
-    <table class="table-striped mt-1 mb-1">
+    <table class="table-striped mt-1 mb-1 p-3 w-100">
         <tr>
-            <th>Item</th>
-            <th>Price</th>
-            <th>Quantity</th>
+            <th scope="col">Item</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
         </tr>
         <tbody>
             <tr class="cart-item" *ngFor="let item of items">
-                <td>{{ item.name }}</td>
-                <td>{{ item.basePrice }}</td>
-                <td>{{ item.length }}</td>
+                <th scope="row">{{item.name}}</th>
+                <td>{{item.basePrice}} {{item.baseCurrency}}</td>
+                <td>{{item.length}}</td>
             </tr>
         </tbody>
     </table>
-    <button class="btn btn-success">Checkout</button>
+    <button (click)="addDelivery()" class="btn btn-success">Add Delivery</button> or
+    <button (click)="clearCart()" class="btn btn-warn">Empty basket</button>
 </div>
 <ng-template #emptyCartBlock>
     <p>But for now it's empty.</p>
