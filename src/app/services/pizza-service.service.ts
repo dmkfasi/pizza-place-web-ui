@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Pizza } from '../interfaces/pizza';
+import { Pizza } from "../interfaces/Pizza";
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +8,6 @@ import { Pizza } from '../interfaces/pizza';
 export class PizzaService {
   // TODO: move to a config file
   private baseURL: string = "https://pizza-place-backend.herokuapp.com/api/v1/Pizza";
-  private pizzaProducts: [];
 
   constructor(private http: HttpClient) { }
 
