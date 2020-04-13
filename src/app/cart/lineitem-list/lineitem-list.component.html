@@ -14,9 +14,17 @@
                 <td>{{item.length}}</td>
             </tr>
         </tbody>
+        <tfoot>
+            <tr>
+                <th scope="row">Total</th>
+                <th>{{totalCost}}</th>
+            </tr>
+        </tfoot>
     </table>
-    <button (click)="addDelivery()" class="btn btn-success">Add Delivery</button> or
-    <button (click)="clearCart()" class="btn btn-warn">Empty basket</button>
+    <button *ngIf="!this.hasDelivery" (click)="addDelivery()" class="btn btn-success">Add Delivery</button>
+    <button *ngIf="this.hasDelivery" class="btn btn-success">Checkout</button>
+    or
+    <button (click)="clearCart()" class="btn btn-danger">Empty basket</button>
 </div>
 <ng-template #emptyCartBlock>
     <p>But for now it's empty.</p>
