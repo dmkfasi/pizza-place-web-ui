@@ -9,13 +9,16 @@ import { CartService } from './services/cart.service';
 
 export class AppComponent {
   shoppingCartIsEmpty: boolean = true;
+  addedItemName: string = 'Hurry up some buy!';
 
   constructor(private cartService: CartService) { }
 
   ngOnInit() {
+    // Display notification upon Shopping Cart icon and update Tooltip for it
     const cartObservable = this.cartService.setupObservable();
-    cartObservable.subscribe(() => {
+    cartObservable.subscribe((itemName: any) => {
       this.shoppingCartIsEmpty = false;
+      this.addedItemName = itemName;
     });
   }
 }
