@@ -20,4 +20,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 
 ## Deploying to Heroku
 
-Just push to the Heroku remote branch and enjoy it!
+Just push to the Heroku remote branch, sit back and enjoy it!
+
+## Live Demo
+[Available here](https://pizza-place-web-ui.herokuapp.com/)
