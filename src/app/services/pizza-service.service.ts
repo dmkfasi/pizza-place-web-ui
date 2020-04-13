@@ -6,7 +6,8 @@ import { Pizza } from '../interfaces/pizza';
   providedIn: 'root'
 })
 export class PizzaService {
-  private baseURL: string = "http://localhost:8080/api/v1/Pizza";
+  // TODO: move to a config file
+  private baseURL: string = "https://pizza-place-backend.herokuapp.com/api/v1/Pizza";
   private pizzaProducts: [];
 
   constructor(private http: HttpClient) { }
