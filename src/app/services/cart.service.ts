@@ -1,5 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Output } from '@angular/core';
 import { Pizza } from '../interfaces/pizza';
+import { Observable } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -7,18 +8,24 @@ import { Pizza } from '../interfaces/pizza';
 export class CartService {
     items = [];
     itemsCount: { id: number, count: number };
+    observer;
 
-    constructor() { }
+    constructor() {
+    }
+
+    setupObservable() {
+        const cartObservable = new Observable(observer => {
+            this.observer = observer;
+        });
+
+        return cartObservable;
+    }
 
     addToCart(product) {
-
-        // this.itemsCount.id = product.id;
-        // this.itemsCount.count += 1;
-
         this.items.push(product);
-
-        // console.log(this.itemsCount);
-    }
+        this.observer.next(this.items[-1]);
+        this.observer.complete();
+    }    
 
     getItems() {
         return this.items;
