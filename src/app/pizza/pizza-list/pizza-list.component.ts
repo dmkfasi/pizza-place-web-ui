@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PizzaService } from 'src/app/services/pizza-service.service';
-import { Pizza } from 'src/app/interfaces/pizza';
+import { Pizza } from "src/app/interfaces/Pizza";
 import { CartService } from 'src/app/services/cart.service';
 
 @Component({
@@ -20,7 +20,7 @@ export class PizzaListComponent implements OnInit {
     });
   }
 
-  addToCart(pizza) {
+  addToCart(pizza: Pizza) {
     this.cartService.addToCart(pizza);
     window.alert('Your product has been added to the cart!');
   }

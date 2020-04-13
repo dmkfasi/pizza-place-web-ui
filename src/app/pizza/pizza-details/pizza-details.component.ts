@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { CartService } from '../../services/cart.service';
 import { PizzaService } from 'src/app/services/pizza-service.service';
-import { Pizza } from 'src/app/interfaces/pizza';
+import { Pizza } from "src/app/interfaces/Pizza";
 
 @Component({
   selector: 'app-pizza-details',
