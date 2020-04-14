@@ -23,7 +23,7 @@ export class CartService {
     addToCart(product: any) {
         // Stack products onto array
         this.items.push(product);
-        this.updateTotalCost(product.basePrice);
+        this.updateTotalCost(product.price);
 
         this.observer.next(product.name);
     }
