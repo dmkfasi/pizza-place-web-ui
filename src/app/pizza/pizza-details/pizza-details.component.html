@@ -1,23 +1,25 @@
 <div class="container justify-content-center" *ngIf="this.pizza">
     <div class="card-deck">
-        <div class="card mt-3" *ngFor="let pizza of this.pizza" style="min-width: 15rem; max-width: 22rem;">
+        <div class="card mt-3" style="min-width: 15rem; max-width: 22rem;">
             <a [routerLink]="['/pizza']" class="btn btn-secondary">Back</a>
             <img class="card-img-top" src="/assets/p/{{pizza.pictureFilename}}" alt="{{pizza.name}}">
             <div class="card-body">
                 <h5 class="card-title">{{pizza.name}}</h5>
-                <h6 class="card-subtitle text-muted">Basic toppings: <span
-                        *ngFor="let topping of pizza.toppings">{{ topping.ingredient }}, </span></h6>
+                <h6 class="card-subtitle text-muted">
+                    Basic toppings: {{this.toppingsListString}}
+                </h6>
                 <div class="card-text text-justify">{{pizza.description}}</div>
             </div>
             <div class="card-footer m-0 p-1">
                 <div class="d-flex justify-content-between">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
                         <label class="btn btn-secondary" *ngFor="let size of pizza.sizes">
-                            <input type="radio" name="size" id="{{size.code}}" autocomplete="off"
-                                title="{{ size.description }}" value="{{ size.code }}">{{ size.code | uppercase }}
+                            <input type="radio" name="size" id="{{size.code}}" autocomplete="off" data-toggle="tooltip"
+                                data-placement="top" title="{{size.description}}" value="{{size.code}}" (click)="updatePrice(size.priceMarkup)">
+                            {{size.code | uppercase}}
                         </label>
                     </div>
-                    <p class="align-middle">{{pizza.basePrice}} {{pizza.baseCurrency}}</p>
+                    <p class="align-middle">{{pizza.price | currency: pizza.baseCurrency}}</p>
                     <button (click)="addToCart(pizza)" class="btn btn-info">Add to Cart</button>
                 </div>
             </div>
