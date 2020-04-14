@@ -28,9 +28,20 @@ export class CartService {
         this.observer.next(product.name);
     }
 
-    addDelivery(delivery: Delivery): void {
-        // Add as if it were a catalog item
-        this.addToCart(delivery);
+    removeFromCart(idx: number): void {
+        let productName = this.items[idx]['name'];
+        let productPrice = this.items[idx]['price'];
+
+        this.items.splice(idx, 1);
+
+        // Dispose of cart contents properly when there are no items left
+        if (this.items.length == 0) {
+            this.clearCart();
+        } else {
+            this.updateTotalCost(-productPrice);
+            this.observer.next(productName);
+        }
+
     }
 
     updateTotalCost(cost: number): void {
@@ -49,11 +60,8 @@ export class CartService {
     clearCart(): Array<Object> {
         this.items = [];
         this.totalCost = 0;
+        this.observer.next('Empty!');
 
         return this.items;
-    }
-
-    ngOnDestroy(): void {
-        this.observer.unsubscribe();
     }
 }
