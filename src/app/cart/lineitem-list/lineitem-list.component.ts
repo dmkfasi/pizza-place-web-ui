@@ -27,8 +27,19 @@ export class LineitemListComponent implements OnInit {
   }
 
   addDelivery() {
-    this.cartService.addDelivery(this.delivery);
-    this.hasDelivery = true;
+    if (this.hasDelivery === false) {
+      this.cartService.addDelivery(this.delivery);
+      this.hasDelivery = true;
+    }
+  }
+
+  removeItem(id) {
+    this.items.splice(id - 1, 1);
+
+    // Dispose of cart contents properly when there are no items left
+    if (this.items.length == 0) {
+      this.clearCart();
+    }
   }
 
   clearCart() {
