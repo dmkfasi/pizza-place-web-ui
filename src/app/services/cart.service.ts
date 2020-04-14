@@ -1,23 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
-import { Delivery } from '../interfaces/Delivery';
+import { Observable, Subscriber, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    private observer: Subscriber<any>;
+    private subject = new Subject<any>();
     private items: Array<Object> = [];
     private totalCost: number = 0;
+    private deliverySet: boolean = false;
 
     constructor() { }
 
-    setupObservable(): Observable<any> {
-        const cartObservable = new Observable(observer => {
-            this.observer = observer;
-        });
-
-        return cartObservable;
+    getUpdates(): Observable<any> {
+        return this.subject.asObservable();
     }
 
     addToCart(product: any): void {
@@ -25,7 +21,12 @@ export class CartService {
         this.items.push(product);
         this.updateTotalCost(product.price);
 
-        this.observer.next(product.name);
+        // TODO refactor this
+        if (product.name === 'Delivery') {
+            this.deliverySet = true;
+        }
+
+        this.subject.next(product.name + ' just added!');
     }
 
     removeFromCart(idx: number): void {
@@ -34,14 +35,26 @@ export class CartService {
 
         this.items.splice(idx, 1);
 
+        // TODO refactor
+        if (productName === 'Delivery') {
+            this.deliverySet = false;
+        }
+
         // Dispose of cart contents properly when there are no items left
         if (this.items.length == 0) {
             this.clearCart();
         } else {
+            // Update Cart totals accordingly
             this.updateTotalCost(-productPrice);
-            this.observer.next(productName);
+
+            // Notify subscribers about item removed
+            this.subject.next(productName + ' was removed!');
         }
 
+    }
+
+    hasDelivery(): boolean {
+        return this.deliverySet;
     }
 
     updateTotalCost(cost: number): void {
@@ -60,7 +73,7 @@ export class CartService {
     clearCart(): Array<Object> {
         this.items = [];
         this.totalCost = 0;
-        this.observer.next('Empty!');
+        this.subject.next('Empty!');
 
         return this.items;
     }
