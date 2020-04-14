@@ -15,7 +15,7 @@ export class LineitemListComponent implements OnInit {
   // TODO: fetch from backend app
   delivery: Delivery = {
     name: 'Delivery',
-    basePrice: 3.49,
+    price: 3.49,
     baseCurrency: 'EUR'
   };
 

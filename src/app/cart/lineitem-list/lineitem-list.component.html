@@ -11,7 +11,7 @@
         <tbody>
             <tr class="cart-item" *ngFor="let item of items">
                 <th scope="row">{{item.name}}</th>
-                <td>{{item.basePrice | currency: item.baseCurrency}}</td>
+                <td>{{item.price | currency: item.baseCurrency}}</td>
                 <td>1</td><!-- FIXME -->
                 <td>
                     <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove this item" (click)="removeItem(item)">X</button>
