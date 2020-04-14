@@ -1,5 +1,5 @@
 export interface Delivery {
     name: string;
-    basePrice: number;
+    price: number;
     baseCurrency: string;
 }
