@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { CartService } from './services/cart.service';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -9,7 +8,7 @@ import { Subscription } from 'rxjs';
 })
 
 export class AppComponent {
-  cartSubscription: Subscription;
+  // cartSubscription: Subscription;
   shoppingCartIsEmpty: boolean = true;
   addedItemName: string = 'Hurry up some buy!';
 
@@ -17,14 +16,13 @@ export class AppComponent {
 
   ngOnInit() {
     // Display notification upon Shopping Cart icon and update Tooltip for it
-    let observable = this.cartService.setupObservable();
-    this.cartSubscription = observable.subscribe((itemName: any) => {
+    this.cartService.getUpdates().subscribe((itemName: string) => {
       this.shoppingCartIsEmpty = false;
       this.addedItemName = itemName;
     });
   }
 
   ngOnDestroy(): void {
-    this.cartSubscription.unsubscribe();
+    // this.cartService.getUpdates().unsubscribe();
   }
 }
