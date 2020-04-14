@@ -6,15 +6,15 @@
             <th scope="col">Item</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
-            <th scope="col">X</th>
+            <th scope="col"></th>
         </tr>
         <tbody>
-            <tr class="cart-item" *ngFor="let item of items">
+            <tr class="cart-item" *ngFor="let item of items; index as idx">
                 <th scope="row">{{item.name}}</th>
                 <td>{{item.price | currency: item.baseCurrency}}</td>
                 <td>1</td><!-- FIXME -->
                 <td>
-                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove this item" (click)="removeItem(item)">X</button>
+                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove this item" (click)="removeItem(idx)">X</button>
                 </td>
             </tr>
         </tbody>
