@@ -13,7 +13,7 @@
                 <th scope="row">{{item.name}}</th>
                 <td>{{item.price | currency: item.baseCurrency}}</td>
                 <td>1</td><!-- FIXME -->
-                <td>
+                <td class="text-right">
                     <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove this item" (click)="removeItem(idx)">X</button>
                 </td>
             </tr>
@@ -25,12 +25,12 @@
             </tr>
         </tfoot>
     </table>
-    <button *ngIf="!this.hasDelivery" (click)="addDelivery()" class="btn btn-success">Add Delivery</button>
-    <button *ngIf="this.hasDelivery" class="btn btn-success">Checkout</button>
+    <button *ngIf="!hasDelivery" (click)="addDelivery()" class="btn btn-success">Add Delivery</button>
+    <button *ngIf="hasDelivery" class="btn btn-success">Checkout</button>
     or
     <button (click)="clearCart()" class="btn btn-danger">Empty basket</button>
 </div>
 <ng-template #emptyCartBlock>
     <p>But for now it's empty.</p>
-    <p>Hey, why don't get your best Pizza <a routerLink="/pizza">here</a>?</p>
+    <p>Hey, why don't grab your best Pizza <a routerLink="/pizza">over here</a>?</p>
 </ng-template>
