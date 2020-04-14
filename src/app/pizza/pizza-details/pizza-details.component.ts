@@ -14,6 +14,7 @@ import { Pizza } from "src/app/interfaces/Pizza";
 export class PizzaDetailsComponent implements OnInit {
   public pizza: Pizza;
   private pizzaName: string;
+  public toppingsListString: string;
 
   constructor(private route: ActivatedRoute,
     private cartService: CartService,
@@ -25,11 +26,25 @@ export class PizzaDetailsComponent implements OnInit {
     });
 
     this.pizzaService.getPizzaByName(this.pizzaName).subscribe(data => {
-      this.pizza = data;
+      this.pizza = data[0];
+      
+      // Fill in basic toppings list
+      this.toppingsListString = this.pizza.toppings.map(function (t) {
+        return t.ingredient;
+      }).join(', ');
+
+      // Setup display price to base price
+      this.updatePrice(1);
     });
+
   }
 
-  addToCart(pizza) {
+  updatePrice(markup: number) {
+    // Update price according to the selected Pizza Size
+    this.pizza.price = this.pizza.basePrice * markup;
+  }
+
+  addToCart(pizza: Pizza) {
     this.cartService.addToCart(pizza);
     window.alert('Your product has been added to the cart!');
   }
