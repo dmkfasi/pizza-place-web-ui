@@ -35,8 +35,7 @@ export class CartService {
 
     updateTotalCost(cost: number) {
         // Update total cost property
-        // FIX ME type casting :(
-        this.totalCost += cost;
+        this.totalCost += Number(cost);
     }
 
     getTotalCost() {
