@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 import { CartService } from '../../services/cart.service';
-import { PizzaService } from 'src/app/services/pizza-service.service';
+import { PizzaService } from 'src/app/services/pizza.service';
 import { Pizza } from "src/app/interfaces/Pizza";
 
 @Component({
@@ -34,7 +34,7 @@ export class PizzaDetailsComponent implements OnInit {
       }).join(', ');
 
       // Setup display price to base price
-      this.updatePrice(1);
+      this.updatePrice(this.pizza.sizes[0].priceMarkup);
     });
 
   }
