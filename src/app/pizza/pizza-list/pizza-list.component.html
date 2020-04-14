@@ -1,4 +1,4 @@
-<div class="container justify-content-center" *ngIf="pizzas">
+<div class="container justify-content-center" *ngIf="pizzas; else loadingItemsBlock">
     <div class="card-deck">
         <div class="card mt-3" *ngFor="let pizza of pizzas" style="min-width: 15rem; max-width: 22rem;">
             <a [routerLink]="['/pizza', pizza.name]">
@@ -21,3 +21,6 @@
         </div>
     </div>
 </div>
+<ng-template #loadingItemsBlock>
+    Hey, please allow us some time to bake some of the best Italian Pizza in Town...
+</ng-template>

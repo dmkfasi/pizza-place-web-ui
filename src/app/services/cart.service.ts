@@ -1,18 +1,18 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, Subscriber } from 'rxjs';
 import { Delivery } from '../interfaces/Delivery';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
-    private observer;
-    private items = [];
+    private observer: Subscriber<any>;
+    private items: Array<Object> = [];
     private totalCost: number = 0;
 
     constructor() { }
 
-    setupObservable() {
+    setupObservable(): Observable<any> {
         const cartObservable = new Observable(observer => {
             this.observer = observer;
         });
@@ -20,7 +20,7 @@ export class CartService {
         return cartObservable;
     }
 
-    addToCart(product: any) {
+    addToCart(product: any): void {
         // Stack products onto array
         this.items.push(product);
         this.updateTotalCost(product.price);
@@ -28,28 +28,32 @@ export class CartService {
         this.observer.next(product.name);
     }
 
-    addDelivery(delivery: Delivery) {
+    addDelivery(delivery: Delivery): void {
         // Add as if it were a catalog item
         this.addToCart(delivery);
     }
 
-    updateTotalCost(cost: number) {
+    updateTotalCost(cost: number): void {
         // Update total cost property
         this.totalCost += Number(cost);
     }
 
-    getTotalCost() {
+    getTotalCost(): number {
         return this.totalCost;
     }
 
-    getItems() {
+    getItems(): Array<Object> {
         return this.items;
     }
 
-    clearCart() {
+    clearCart(): Array<Object> {
         this.items = [];
         this.totalCost = 0;
 
         return this.items;
+    }
+
+    ngOnDestroy(): void {
+        this.observer.unsubscribe();
     }
 }

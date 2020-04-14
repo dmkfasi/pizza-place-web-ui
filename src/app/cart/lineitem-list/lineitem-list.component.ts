@@ -8,7 +8,7 @@ import { Delivery } from "../../interfaces/Delivery";
   styleUrls: ['./lineitem-list.component.css']
 })
 export class LineitemListComponent implements OnInit {
-  items = [];
+  items: Array<Object> = [];
   hasDelivery: boolean = false;
   totalCost: number = 0;
 
@@ -26,14 +26,14 @@ export class LineitemListComponent implements OnInit {
     this.totalCost = this.cartService.getTotalCost();
   }
 
-  addDelivery() {
+  addDelivery(): void {
     if (this.hasDelivery === false) {
       this.cartService.addDelivery(this.delivery);
       this.hasDelivery = true;
     }
   }
 
-  removeItem(id) {
+  removeItem(id: number): void {
     this.items.splice(id - 1, 1);
 
     // Dispose of cart contents properly when there are no items left
@@ -42,7 +42,7 @@ export class LineitemListComponent implements OnInit {
     }
   }
 
-  clearCart() {
+  clearCart(): void {
     this.cartService.clearCart();
     this.hasDelivery = false;
 

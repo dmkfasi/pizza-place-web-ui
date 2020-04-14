@@ -20,9 +20,8 @@ export class PizzaListComponent implements OnInit {
     });
   }
 
-  addToCart(pizza: Pizza) {
+  addToCart(pizza: Pizza): void {
     this.cartService.addToCart(pizza);
     window.alert('Your product has been added to the cart!');
   }
-
 }
