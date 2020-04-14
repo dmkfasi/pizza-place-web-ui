@@ -6,18 +6,22 @@
             <th scope="col">Item</th>
             <th scope="col">Price</th>
             <th scope="col">Quantity</th>
+            <th scope="col">X</th>
         </tr>
         <tbody>
             <tr class="cart-item" *ngFor="let item of items">
                 <th scope="row">{{item.name}}</th>
-                <td>{{item.basePrice}} {{item.baseCurrency}}</td>
-                <td>{{item.length}}</td>
+                <td>{{item.basePrice | currency: item.baseCurrency}}</td>
+                <td>1</td><!-- FIXME -->
+                <td>
+                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove this item" (click)="removeItem(item)">X</button>
+                </td>
             </tr>
         </tbody>
         <tfoot>
             <tr>
                 <th scope="row">Total</th>
-                <th>{{totalCost}}</th>
+                <th>{{totalCost | currency: delivery.baseCurrency}}</th>
             </tr>
         </tfoot>
     </table>
