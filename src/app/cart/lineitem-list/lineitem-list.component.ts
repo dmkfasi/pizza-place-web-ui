@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Delivery } from "../../interfaces/Delivery";
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lineitem-list',
@@ -8,6 +9,7 @@ import { Delivery } from "../../interfaces/Delivery";
   styleUrls: ['./lineitem-list.component.css']
 })
 export class LineitemListComponent implements OnInit {
+  cartSubscription: Subscription;
   items: Array<Object> = [];
   hasDelivery: boolean = false;
   totalCost: number = 0;
@@ -24,22 +26,23 @@ export class LineitemListComponent implements OnInit {
   ngOnInit(): void {
     this.items = this.cartService.getItems();
     this.totalCost = this.cartService.getTotalCost();
+
+    let observable = this.cartService.setupObservable();
+    this.cartSubscription = observable.subscribe(() => {
+      this.totalCost = this.cartService.getTotalCost();
+    });
   }
 
   addDelivery(): void {
+    // Add as if it were a catalog item
     if (this.hasDelivery === false) {
-      this.cartService.addDelivery(this.delivery);
+      this.cartService.addToCart(this.delivery);
       this.hasDelivery = true;
     }
   }
 
-  removeItem(id: number): void {
-    this.items.splice(id - 1, 1);
-
-    // Dispose of cart contents properly when there are no items left
-    if (this.items.length == 0) {
-      this.clearCart();
-    }
+  removeItem(idx: number): void {
+    this.cartService.removeFromCart(idx);
   }
 
   clearCart(): void {
@@ -48,5 +51,9 @@ export class LineitemListComponent implements OnInit {
 
     // TODO: replace me with Router Events Subscription
     window.location.reload();
+  }
+
+  ngOnDestroy(): void {
+    this.cartSubscription.unsubscribe();
   }
 }
