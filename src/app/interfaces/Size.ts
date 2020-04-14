@@ -3,6 +3,6 @@ export interface Size {
     code: string;
     description: string;
     dia: number;
-    priceMarkUp: number;
+    priceMarkup: number;
 
 }
