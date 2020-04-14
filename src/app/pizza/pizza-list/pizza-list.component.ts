@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { PizzaService } from 'src/app/services/pizza-service.service';
+import { PizzaService } from 'src/app/services/pizza.service';
 import { Pizza } from "src/app/interfaces/Pizza";
 import { CartService } from 'src/app/services/cart.service';
 
@@ -17,6 +17,10 @@ export class PizzaListComponent implements OnInit {
   ngOnInit(): void {
     this.pizzaService.getPizzaList().subscribe(data => {
       this.pizzas = data;
+
+      this.pizzas.forEach(pizza => {
+        pizza.price = Number(pizza.basePrice) * Number(pizza.sizes[0].priceMarkup);
+      });
     });
   }
 
