@@ -9,10 +9,10 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./lineitem-list.component.css']
 })
 export class LineitemListComponent implements OnInit {
-  cartSubscription: Subscription;
-  items: Array<Object> = [];
-  hasDelivery: boolean = false;
-  totalCost: number = 0;
+  // cartSubscription: Subscription;
+  public items: Array<Object> = [];
+  public hasDelivery: boolean = false;
+  public totalCost: number = 0;
 
   // TODO: fetch from backend app
   delivery: Delivery = {
@@ -27,9 +27,9 @@ export class LineitemListComponent implements OnInit {
     this.items = this.cartService.getItems();
     this.totalCost = this.cartService.getTotalCost();
 
-    let observable = this.cartService.setupObservable();
-    this.cartSubscription = observable.subscribe(() => {
+    this.cartService.getUpdates().subscribe(() => {
       this.totalCost = this.cartService.getTotalCost();
+      this.hasDelivery = this.cartService.hasDelivery();
     });
   }
 
@@ -54,6 +54,6 @@ export class LineitemListComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.cartSubscription.unsubscribe();
+    // this.cartSubscription.unsubscribe();
   }
 }
