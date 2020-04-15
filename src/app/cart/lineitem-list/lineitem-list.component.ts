@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Delivery } from "../../interfaces/Delivery";
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lineitem-list',
@@ -24,9 +23,12 @@ export class LineitemListComponent implements OnInit {
   constructor(private cartService: CartService) { }
 
   ngOnInit(): void {
+    // Update essential properties upon entering the component
     this.items = this.cartService.getItems();
     this.totalCost = this.cartService.getTotalCost();
+    this.hasDelivery = this.cartService.hasDelivery();
 
+    // Get updates when Shopping Cart has some changes
     this.cartService.getUpdates().subscribe(() => {
       this.totalCost = this.cartService.getTotalCost();
       this.hasDelivery = this.cartService.hasDelivery();
