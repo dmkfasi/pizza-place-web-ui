@@ -23,6 +23,7 @@ export class AppComponent {
   }
 
   ngOnDestroy(): void {
+    // FIXME
     // this.cartService.getUpdates().unsubscribe();
   }
 }
