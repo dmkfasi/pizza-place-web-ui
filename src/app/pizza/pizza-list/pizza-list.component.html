@@ -1,6 +1,6 @@
 <div class="container justify-content-center" *ngIf="pizzas; else loadingItemsBlock">
     <div class="card-deck">
-        <div class="card mt-3" *ngFor="let pizza of pizzas" style="min-width: 15rem; max-width: 22rem;">
+        <div class="card mt-3" *ngFor="let pizza of pizzas" style="min-width: 15rem;">
             <a [routerLink]="['/pizza', pizza.name]">
                 <img class="card-img-top" src="/assets/p/{{pizza.pictureFilename}}" alt="{{pizza.name}}">
             </a>
