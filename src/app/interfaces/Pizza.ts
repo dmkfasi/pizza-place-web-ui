@@ -9,6 +9,7 @@ export interface Pizza {
     toppings: Topping[];
     extraToppings?: Topping[];
     sizes: Size[];
+    dia: number;
     pictureFilename?: string[];
     description?: string;
 }
