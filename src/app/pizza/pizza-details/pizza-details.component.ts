@@ -35,6 +35,8 @@ export class PizzaDetailsComponent implements OnInit {
 
       // Setup display price to base price
       this.updatePrice(this.pizza.sizes[0].priceMarkup);
+      // Setup display dia to base size
+      this.updateSize(this.pizza.sizes[0].dia);
     });
 
   }
@@ -42,6 +44,11 @@ export class PizzaDetailsComponent implements OnInit {
   updatePrice(markup: number) {
     // Update price according to the selected Pizza Size
     this.pizza.price = this.pizza.basePrice * markup;
+  }
+
+  updateSize(dia: number) {
+    // Update size display according to the selected Pizza Size
+    this.pizza.dia = dia;
   }
 
   addToCart(pizza: Pizza) {

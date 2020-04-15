@@ -1,6 +1,6 @@
-<div class="container justify-content-center" *ngIf="pizza">
+<div class="container justify-content-center w-90" *ngIf="pizza; else loadingItemBlock">
     <div class="card-deck">
-        <div class="card mt-3" style="min-width: 15rem; max-width: 22rem;">
+        <div class="card mt-3" style="min-width: 15rem;">
             <a [routerLink]="['/pizza']" class="btn btn-secondary">Back</a>
             <img class="card-img-top" src="/assets/p/{{pizza.pictureFilename}}" alt="{{pizza.name}}">
             <div class="card-body">
@@ -11,18 +11,25 @@
                 <div class="card-text text-justify">{{pizza.description}}</div>
             </div>
             <div class="card-footer m-0 p-1">
-                <div class="d-flex justify-content-between">
+                <div class="d-flex justify-content-between align-middle">
                     <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                        <label class="btn btn-secondary" *ngFor="let size of pizza.sizes">
-                            <input type="radio" name="size" id="{{size.code}}" autocomplete="off" data-toggle="tooltip"
-                                data-placement="top" title="{{size.description}}" value="{{size.code}}" (click)="updatePrice(size.priceMarkup)">
+                        <label class="btn btn-secondary" *ngFor="let size of pizza.sizes" data-toggle="tooltip"
+                            data-placement="top" title="{{size.description}}">
+                            <input type="radio" name="size" id="{{size.code}}" autocomplete="off" value="{{size.code}}"
+                                (click)="updatePrice(size.priceMarkup); updateSize(size.dia)">
                             {{size.code | uppercase}}
                         </label>
                     </div>
-                    <p class="align-middle">{{pizza.price | currency: pizza.baseCurrency}}</p>
+                    <div class="text-center">
+                        {{pizza.price | currency: pizza.baseCurrency}}<br/>
+                        {{pizza.dia}} cm
+                    </div>
                     <button (click)="addToCart(pizza)" class="btn btn-info">Add to Cart</button>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<ng-template #loadingItemBlock>
+    Wait up, wait up! I'm asking our Chef for details about the Pizza you like!
+</ng-template>
