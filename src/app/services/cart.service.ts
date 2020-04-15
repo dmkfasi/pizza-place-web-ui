@@ -12,6 +12,7 @@ export class CartService {
 
     constructor() { }
 
+    // Allow subscriptions for updates in the Cart contents
     getUpdates(): Observable<any> {
         return this.subject.asObservable();
     }
