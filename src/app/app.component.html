@@ -3,8 +3,18 @@
     <img src="/assets/favicon-32x32.png" width="32" height="32" class="d-inline-block align-top" alt="">
     The best Pizza in Town!
   </a>
-  <button class="btn btn-warning" routerLink='/cart' data-toggle="tooltip" data-placement="bottom" title="{{addedItemName}}">Cart <span *ngIf="!shoppingCartIsEmpty" class="badge badge-success">*</span></button>
+  <button class="btn btn-warning" routerLink='/cart' data-toggle="tooltip" data-placement="bottom"
+    title="{{addedItemName}}">Cart <span *ngIf="!shoppingCartIsEmpty" class="badge badge-success">*</span></button>
 </nav>
+<!-- Added to Cart toast  -->
+<div class="toast bg-light border border-dark rounded" id="addedToCartToast" role="alert" aria-live="assertive"
+  aria-atomic="true" style="position: fixed; left:50%; top: 50%; z-index: 100;  transform: translate(-50%, -50%);" data-delay="1500">
+  <div class="toast-body">
+    <img src="/assets/favicon-32x32.png" alt="Your Pizza has been added to the Shopping Cart">
+    <strong class="mr-auto">Nice!</strong>
+    <p class="mb-0">Your Pizza is in Shopping Cart now!</p>
+  </div>
+</div>
 <div class="container mt-5">
   <router-outlet></router-outlet>
 </div>
