@@ -14,7 +14,8 @@
                 <td>{{item.price | currency: item.baseCurrency}}</td>
                 <td>1</td><!-- FIXME -->
                 <td class="text-right">
-                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom" title="Remove this item" (click)="removeItem(idx)">X</button>
+                    <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"
+                        title="Remove this item" (click)="removeItem(idx)">X</button>
                 </td>
             </tr>
         </tbody>
@@ -26,10 +27,63 @@
         </tfoot>
     </table>
     <button *ngIf="!hasDelivery" (click)="addDelivery()" class="btn btn-success">Add Delivery</button>
-    <button *ngIf="hasDelivery" class="btn btn-success">Checkout</button>
+    <button *ngIf="hasDelivery" class="btn btn-success" data-toggle="modal" data-target="#checkOutModal">
+        Checkout
+    </button>
     or
-    <button (click)="clearCart()" class="btn btn-danger">Empty basket</button>
+    <button data-toggle="modal" data-target="#clearCartModal" class="btn btn-danger">
+        Empty basket
+    </button>
+
+    <!-- Checkout Modal -->
+    <div class="modal" id="checkOutModal" tabindex="-1" role="dialog" aria-labelledby="checkOutModal"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="checkOutModalTitle">Order Checkout</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Thanks for the order! Your Pizza is coming along!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" (click)="checkOut(); goHome()" class="btn btn-success"
+                        data-dismiss="modal">Hurray!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Clear Cart Confirmation Modal -->
+    <div class="modal" id="clearCartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="clearCartModalTitle">Empty Basket</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Are you sure you want to discard all the products? Don't let yourself crave with hunger!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-dismiss="modal">
+                        Oh, no, no way!
+                    </button>
+                    <button type="button" (click)="clearCart(); goHome()" class="btn btn-warning" data-dismiss="modal">
+                        Yes, please!
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
 <ng-template #emptyCartBlock>
     <p>But for now it's empty.</p>
     <p>Hey, why don't grab your best Pizza <a routerLink="/pizza">over here</a>?</p>
