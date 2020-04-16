@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Delivery } from "../../interfaces/Delivery";
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-lineitem-list',
@@ -20,7 +21,7 @@ export class LineitemListComponent implements OnInit {
     baseCurrency: 'EUR'
   };
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private router: Router) { }
 
   ngOnInit(): void {
     // Update essential properties upon entering the component
@@ -47,12 +48,17 @@ export class LineitemListComponent implements OnInit {
     this.cartService.removeFromCart(idx);
   }
 
+  checkOut(): void {
+    this.clearCart();
+  }
+  
   clearCart(): void {
     this.cartService.clearCart();
     this.hasDelivery = false;
-
-    // TODO: replace me with Router Events Subscription
-    window.location.reload();
+  }
+  
+  goHome() {
+    this.router.navigate(['/']);
   }
 
   ngOnDestroy(): void {
