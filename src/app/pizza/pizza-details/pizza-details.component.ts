@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CartService } from '../../services/cart.service';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { Pizza } from "src/app/interfaces/Pizza";
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-pizza-details',
@@ -53,6 +54,9 @@ export class PizzaDetailsComponent implements OnInit {
 
   addToCart(pizza: Pizza) {
     this.cartService.addToCart(pizza);
-    window.alert('Your product has been added to the cart!');
+  }
+
+  displayToast(toastName: string): void {
+    AppComponent.displayToast(toastName);
   }
 }

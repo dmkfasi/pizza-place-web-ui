@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { Pizza } from "src/app/interfaces/Pizza";
 import { CartService } from 'src/app/services/cart.service';
+import { AppComponent } from 'src/app/app.component';
 
 @Component({
   selector: 'app-pizza-list',
@@ -26,6 +27,9 @@ export class PizzaListComponent implements OnInit {
 
   addToCart(pizza: Pizza): void {
     this.cartService.addToCart(pizza);
-    window.alert('Your product has been added to the cart!');
+  }
+
+  displayToast(toastName: string): void {
+    AppComponent.displayToast(toastName);
   }
 }
