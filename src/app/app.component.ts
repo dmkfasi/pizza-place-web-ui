@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { CartService } from './services/cart.service';
+declare var $: any;
 
 @Component({
   selector: 'app-root',
@@ -25,5 +26,9 @@ export class AppComponent {
   ngOnDestroy(): void {
     // FIXME
     // this.cartService.getUpdates().unsubscribe();
+  }
+
+  static displayToast(toastName: string): void {
+    $('#' + toastName).toast('show');
   }
 }
