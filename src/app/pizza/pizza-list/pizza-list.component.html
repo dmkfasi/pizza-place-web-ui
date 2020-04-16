@@ -13,7 +13,7 @@
                     <p class="align-middle">
                         From just {{pizza.price | currency: pizza.baseCurrency}}
                     </p>
-                    <button (click)="addToCart(pizza)" class="btn btn-info">
+                    <button (click)="displayToast('addedToCartToast'); addToCart(pizza)" class="btn btn-info">
                         Add to Cart
                     </button>
                 </div>
@@ -21,6 +21,7 @@
         </div>
     </div>
 </div>
+
 <ng-template #loadingItemsBlock>
     Hey, please allow us some time to cook some of the best Italian Pizza in Town for you!
     Your Pizza is on its way!

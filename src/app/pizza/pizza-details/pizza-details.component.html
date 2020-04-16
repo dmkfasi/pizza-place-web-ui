@@ -24,7 +24,7 @@
                         {{pizza.price | currency: pizza.baseCurrency}}<br/>
                         {{pizza.dia}} cm
                     </div>
-                    <button (click)="addToCart(pizza)" class="btn btn-info">Add to Cart</button>
+                    <button (click)="displayToast('addedToCartToast'); addToCart(pizza)" class="btn btn-info">Add to Cart</button>
                 </div>
             </div>
         </div>
