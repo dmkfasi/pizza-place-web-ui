@@ -19,8 +19,12 @@ export class PizzaListComponent implements OnInit {
     this.pizzaService.getPizzaList().subscribe(data => {
       this.pizzas = data;
 
+      // FIXME: refactor to a common object
+      // Calculate default properties for each product
       this.pizzas.forEach(pizza => {
         pizza.price = Number(pizza.basePrice) * Number(pizza.sizes[0].priceMarkup);
+        pizza.selectedSize = pizza.sizes[0];
+        pizza.dia = pizza.selectedSize.dia;
       });
     });
   }
