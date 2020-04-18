@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CartService } from 'src/app/services/cart.service';
 import { Delivery } from "../../interfaces/Delivery";
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-lineitem-list',
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./lineitem-list.component.css']
 })
 export class LineitemListComponent implements OnInit {
-  // cartSubscription: Subscription;
+  cartSubscription: Subscription;
   public items: Array<Object> = [];
   public hasDelivery: boolean = false;
   public totalCost: number = 0;
@@ -30,7 +31,7 @@ export class LineitemListComponent implements OnInit {
     this.hasDelivery = this.cartService.hasDelivery();
 
     // Get updates when Shopping Cart has some changes
-    this.cartService.getUpdates().subscribe(() => {
+    this.cartSubscription = this.cartService.getUpdates().subscribe(() => {
       this.totalCost = this.cartService.getTotalCost();
       this.hasDelivery = this.cartService.hasDelivery();
     });
@@ -62,7 +63,6 @@ export class LineitemListComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    // FIXME
-    // this.cartSubscription.unsubscribe();
+    this.cartSubscription.unsubscribe();
   }
 }
