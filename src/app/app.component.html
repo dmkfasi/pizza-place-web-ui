@@ -4,7 +4,7 @@
     The best Pizza in Town!
   </a>
   <button class="btn btn-warning" routerLink='/cart' data-toggle="tooltip" data-placement="bottom"
-    title="{{addedItemName}}">Cart <span *ngIf="!shoppingCartIsEmpty" class="badge badge-success">*</span></button>
+    title="{{addedItemName}}">Cart <span *ngIf="!shoppingCartIsEmpty" class="badge badge-success">{{shoppingCartItemsQuantity}}</span></button>
 </nav>
 <!-- Added to Cart toast  -->
 <div class="toast bg-light border border-dark rounded" id="addedToCartToast" role="alert" aria-live="assertive"
