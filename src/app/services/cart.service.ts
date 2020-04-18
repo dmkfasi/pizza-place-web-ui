@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root'
@@ -7,6 +7,7 @@ import { Observable, Subscriber, Subject } from 'rxjs';
 export class CartService {
     private subject = new Subject<any>();
     private items: Array<Object> = [];
+    private itemQuantity: Map<any, any> = new Map().set('', 0);
     private totalCost: number = 0;
     private totalItemsQuantity: number = 0;
     private deliverySet: boolean = false;
@@ -21,6 +22,7 @@ export class CartService {
     addToCart(product: any): void {
         // Stack products onto array
         this.items.push(product);
+        this.updateItemQuantity(product, 1);
         this.updateTotalCost(product.price);
 
         // TODO refactor this
@@ -34,9 +36,11 @@ export class CartService {
     }
 
     removeFromCart(idx: number): void {
-        let productName = this.items[idx]['name'];
-        let productPrice = this.items[idx]['price'];
-
+        let product = this.items[idx];
+        let productName = product['name'];
+        let productPrice = product['price'];
+        
+        this.updateItemQuantity(product, -1);
         this.items.splice(idx, 1);
 
         // TODO refactor
@@ -66,6 +70,27 @@ export class CartService {
     updateTotalCost(cost: number): void {
         // Update total cost property
         this.totalCost += Number(cost);
+    }
+
+    // FIXME: this needs to account product size as well as handling special products like Delivery
+    updateItemQuantity(product: any, quantity: number) {
+        let nKey: string = '';
+        let nVal: number = 0;
+
+        for (let [key, val] of this.itemQuantity) {
+            if (key == product.name) {
+                nKey = key;
+                nVal = val + quantity;
+                break;
+            } else {
+                nKey = product.name;
+                nVal = quantity;
+            }
+        };
+
+        this.itemQuantity.set(nKey, nVal);
+
+        console.log(this.itemQuantity);
     }
 
     getTotalCost(): number {
