@@ -7,8 +7,8 @@
     title="{{addedItemName}}">Cart <span *ngIf="!shoppingCartIsEmpty" class="badge badge-success">{{shoppingCartItemsQuantity}}</span></button>
 </nav>
 <!-- Added to Cart toast  -->
-<div class="toast bg-light border border-dark rounded" id="addedToCartToast" role="alert" aria-live="assertive"
-  aria-atomic="true" style="position: fixed; left:50%; top: 50%; z-index: 100;  transform: translate(-50%, -50%);" data-delay="1500">
+<div class="toast bg-light border border-dark rounded absolute-center" id="addedToCartToast" role="alert" aria-live="assertive"
+  aria-atomic="true" data-delay="1500">
   <div class="toast-body">
     <img src="/assets/favicon-32x32.png" alt="Your Pizza has been added to the Shopping Cart">
     <strong class="mr-auto">Nice!</strong>
