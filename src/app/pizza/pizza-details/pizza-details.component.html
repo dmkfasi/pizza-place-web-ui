@@ -16,7 +16,7 @@
                         <label class="btn btn-secondary" *ngFor="let size of pizza.sizes" data-toggle="tooltip"
                             data-placement="top" title="{{size.description}}">
                             <input type="radio" name="size" id="{{size.code}}" autocomplete="off" value="{{size.code}}"
-                                (click)="updatePrice(size.priceMarkup); updateSize(size.dia)">
+                                (click)="updatePrice(size.priceMarkup); updateDia(size.dia); updateSize(size)">
                             {{size.code | uppercase}}
                         </label>
                     </div>
