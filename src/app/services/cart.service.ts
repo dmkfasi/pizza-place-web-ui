@@ -8,6 +8,7 @@ export class CartService {
     private subject = new Subject<any>();
     private items: Array<Object> = [];
     private totalCost: number = 0;
+    private totalItemsQuantity: number = 0;
     private deliverySet: boolean = false;
 
     constructor() { }
@@ -25,6 +26,8 @@ export class CartService {
         // TODO refactor this
         if (product.name === 'Delivery') {
             this.deliverySet = true;
+        } else {
+            this.totalItemsQuantity += 1;
         }
 
         this.subject.next(product.name + ' just added!');
@@ -39,6 +42,8 @@ export class CartService {
         // TODO refactor
         if (productName === 'Delivery') {
             this.deliverySet = false;
+        } else {
+            this.totalItemsQuantity -= 1;
         }
 
         // Dispose of cart contents properly when there are no items left
@@ -65,6 +70,10 @@ export class CartService {
 
     getTotalCost(): number {
         return this.totalCost;
+    }
+
+    getLineitemQuantity(): number {
+        return this.totalItemsQuantity;
     }
 
     getItems(): Array<Object> {
