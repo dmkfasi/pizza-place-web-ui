@@ -15,3 +15,8 @@ e2e:
 deploy:
 	git push -v $(APPHOST) $(LOCAL)
 
+srv:
+	ng serve
+
+build:
+	ng build
