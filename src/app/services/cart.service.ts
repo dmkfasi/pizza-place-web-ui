@@ -83,6 +83,7 @@ export class CartService {
     clearCart(): Array<Object> {
         this.items = [];
         this.totalCost = 0;
+        this.totalItemsQuantity = 0;
         this.subject.next('Empty!');
 
         return this.items;
