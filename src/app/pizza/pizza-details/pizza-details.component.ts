@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { CartService } from '../../services/cart.service';
+import { AppComponent } from 'src/app/app.component';
+import { CartService } from 'src/app/services/cart.service';
 import { PizzaService } from 'src/app/services/pizza.service';
 import { Pizza } from "src/app/interfaces/Pizza";
-import { AppComponent } from 'src/app/app.component';
+import { Size } from 'src/app/interfaces/Size';
 
 @Component({
   selector: 'app-pizza-details',
@@ -26,6 +27,7 @@ export class PizzaDetailsComponent implements OnInit {
       this.pizzaName = params.get('name');
     });
 
+    // Fetch Pizza list from the endpoint
     this.pizzaService.getPizzaByName(this.pizzaName).subscribe(data => {
       this.pizza = data[0];
       
@@ -34,10 +36,12 @@ export class PizzaDetailsComponent implements OnInit {
         return t.ingredient;
       }).join(', ');
 
+      // FIXME: refactor to a common object
       // Setup display price to base price
       this.updatePrice(this.pizza.sizes[0].priceMarkup);
       // Setup display dia to base size
-      this.updateSize(this.pizza.sizes[0].dia);
+      this.updateDia(this.pizza.sizes[0].dia);
+      this.updateSize(this.pizza.sizes[0]);
     });
 
   }
@@ -47,9 +51,14 @@ export class PizzaDetailsComponent implements OnInit {
     this.pizza.price = this.pizza.basePrice * markup;
   }
 
-  updateSize(dia: number) {
+  updateDia(dia: number) {
     // Update size display according to the selected Pizza Size
     this.pizza.dia = dia;
+  }
+
+  updateSize(size: Size) {
+    // Update size according to the selected Pizza Size
+    this.pizza.selectedSize = size;
   }
 
   addToCart(pizza: Pizza) {
