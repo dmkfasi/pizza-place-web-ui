@@ -62,7 +62,9 @@ export class PizzaDetailsComponent implements OnInit {
   }
 
   addToCart(pizza: Pizza) {
-    this.cartService.addToCart(pizza);
+    // Create a copy to prevent from updating the price in the Lineitem list upon different Size selection by User.
+    let product: any = new Object();
+    this.cartService.addToCart(Object.assign(product, pizza));
   }
 
   displayToast(toastName: string): void {
