@@ -37,9 +37,10 @@ export class CartService {
     }
 
     removeFromCart(idx: number): void {
-        let product = this.lineItemList[idx];
-        let productName = product['name'];
-        let productPrice = product['price'];
+        let lineItem = this.lineItemList[idx];
+        let productName = lineItem.product.name;
+        let productPrice = lineItem.product.price;
+        let productQty = lineItem.qty;
 
         // this.updateItemQuantity(product, -1);
         this.lineItemList.splice(idx, 1);
@@ -48,7 +49,7 @@ export class CartService {
         if (productName === 'Delivery') {
             this.deliveryIsSet = false;
         } else {
-            this.totalItemsQuantity -= 1;
+            this.totalItemsQuantity -= productQty;
         }
 
         // Dispose of cart contents properly when there are no items left
