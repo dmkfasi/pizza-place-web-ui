@@ -13,7 +13,7 @@
             <tr class="cart-item" *ngFor="let item of items; index as idx">
                 <th scope="row">{{item.product.name}}</th>
                 <td>{{item.product.price | currency: item.product.baseCurrency}}</td>
-                <td>{{item.size.code | uppercase}}</td>
+                <td>{{item.size ? (item.size.code | uppercase) : ''}}</td>
                 <td>{{item.qty}}</td>
                 <td class="text-right">
                     <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"
