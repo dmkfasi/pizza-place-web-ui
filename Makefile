@@ -2,14 +2,14 @@ GITHUB=github
 APPHOST=heroku
 LOCAL=master
 
-.PHONY: e2e
+.PHONY: test
 
 all: commit e2e deploy
 
 commit:
 	git push -v $(GITHUB) $(LOCAL)
 
-e2e:
+test:
 	ng e2e
 
 deploy:
