@@ -1,7 +1,7 @@
 import { Size } from './Size';
 
 export interface LineItem {
-    id: any;
+    product: any;
     qty: number;
     size?: Size;
 }
