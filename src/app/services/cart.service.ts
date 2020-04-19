@@ -14,6 +14,7 @@ export class CartService {
     private deliveryIsSet: boolean = false;
 
     // TODO: refactor to use multicurrency switch and fetch rates from backend
+    // TODO: move to a separate Service
     private currencyList: Map<string, number> = new Map().set('EUR', 1.1).set('USD', 0.9);
     private baseCurrency: string = 'EUR';
 
@@ -52,7 +53,7 @@ export class CartService {
         this.lineItemList.splice(idx, 1);
 
         // Update Cart totals accordingly
-        this.updateTotalCost(-(lineItem.product.basePrice * lineItem.qty));
+        this.updateTotalCost(-(lineItem.product.price * lineItem.qty));
 
         // TODO refactor
         if (productName === 'Delivery') {
@@ -108,7 +109,7 @@ export class CartService {
             // this.lineItemList.splice(idx, 1);
         } else {
             // Update Cart totals accordingly
-            this.updateTotalCost(lineItem.product.basePrice * quantity);
+            this.updateTotalCost(lineItem.product.price * quantity);
         }
     }
 
