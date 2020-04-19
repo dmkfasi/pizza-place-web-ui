@@ -11,8 +11,11 @@ export class CartService {
     // private items: Array<Object> = [];
     private lineItemList: Array<LineItem> = [];
     private totalCost: number = 0;
-    private totalItemsQuantity: number = 0;
     private deliveryIsSet: boolean = false;
+
+    // TODO: refactor to use multicurrency switch and fetch rates from backend
+    private currencyList: Map<string, number> = new Map().set('EUR', 1.1).set('USD', 0.9);
+    private baseCurrency: string = 'EUR';
 
     constructor() { }
 
@@ -22,47 +25,47 @@ export class CartService {
     }
 
     addToCart(product: any): void {
-        // Stack products onto array
-        this.updateItemQuantity(product, 1, product.selectedSize);
-        this.updateTotalCost(product.price);
-
         // TODO refactor this
         if (product.name === 'Delivery') {
             this.deliveryIsSet = true;
-        } else {
-            this.totalItemsQuantity += 1;
         }
 
+        // Stack products onto array
+        this.updateItemQuantity(product, 1, product.selectedSize);
+
+        // Notify subscribers
         this.subject.next(product.name + ' just added!');
     }
 
-    removeFromCart(idx: number): void {
+    deductItem(idx: number): void {
+        let lineItem = this.lineItemList[idx].product;
+        this.updateItemQuantity(lineItem, -1, lineItem.selectedSize);
+
+        // Notify subscribers
+        this.subject.next(lineItem.name + ' was deducted!');
+    }
+
+    removeItem(idx: number): void {
         let lineItem = this.lineItemList[idx];
         let productName = lineItem.product.name;
-        let productPrice = lineItem.product.price;
-        let productQty = lineItem.qty;
 
-        // this.updateItemQuantity(product, -1);
         this.lineItemList.splice(idx, 1);
+
+        // Update Cart totals accordingly
+        this.updateTotalCost(-(lineItem.product.basePrice * lineItem.qty));
 
         // TODO refactor
         if (productName === 'Delivery') {
             this.deliveryIsSet = false;
-        } else {
-            this.totalItemsQuantity -= productQty;
         }
 
         // Dispose of cart contents properly when there are no items left
         if (this.lineItemList.length == 0) {
             this.clearCart();
-        } else {
-            // Update Cart totals accordingly
-            this.updateTotalCost(-productPrice * productQty);
-
-            // Notify subscribers about item removed
-            this.subject.next(productName + ' was removed!');
         }
 
+        // Notify subscribers
+        this.subject.next(productName + ' was removed!');
     }
 
     hasDelivery(): boolean {
@@ -80,14 +83,14 @@ export class CartService {
         selectedSize?: Size): void {
 
         // Find product of the size specified in the Lineitem list
-        const lineItem = this.lineItemList.find((item) => {
+        let lineItem = this.lineItemList.find((item) => {
             return (product == item.product && item.size == selectedSize) ? true : false;
         });
 
         // Add new product in case there is no such item of the size found
         if (undefined === lineItem) {
             if (quantity > 0) {
-                let lineItem: LineItem =
+                lineItem =
                 {
                     product: product, qty: quantity, size: selectedSize
                 };
@@ -96,6 +99,16 @@ export class CartService {
         } else {
             // Update quantity on the item of the size found
             lineItem.qty += quantity;
+
+        }
+        // Do not allow deduct below one piece
+        // TODO: clarify requirements on how to handle this, might want to remove the item once its quantity reaches zero.
+        if (lineItem.qty == 0) {
+            lineItem.qty = 1;
+            // this.lineItemList.splice(idx, 1);
+        } else {
+            // Update Cart totals accordingly
+            this.updateTotalCost(lineItem.product.basePrice * quantity);
         }
     }
 
@@ -104,7 +117,18 @@ export class CartService {
     }
 
     getLineitemQuantity(): number {
-        return this.totalItemsQuantity;
+        // TODO: Think this over: keep tracking via individual property or leave it as is.
+
+        // FIXME: does not work this way due to invalid argument types
+        // return this.lineItemList.reduce((sum, lineItem) => {
+        //     return sum + lineItem.qty;
+        // });
+        let sum: number = 0;
+        this.lineItemList.forEach((lineItem) => {
+            sum += lineItem.qty;
+        });
+
+        return sum;
     }
 
     getLineItems(): Array<Object> {
@@ -114,9 +138,12 @@ export class CartService {
     clearCart(): Array<Object> {
         this.lineItemList = [];
         this.totalCost = 0;
-        this.totalItemsQuantity = 0;
         this.subject.next('Empty!');
 
         return this.lineItemList;
+    }
+
+    getCurrencyInUse(): string {
+        return this.baseCurrency;
     }
 }
