@@ -1,16 +1,18 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
+import { Size } from '../interfaces/Size';
+import { LineItem } from '../interfaces/LineItem';
 
 @Injectable({
     providedIn: 'root'
 })
 export class CartService {
     private subject = new Subject<any>();
-    private items: Array<Object> = [];
-    private itemQuantity: Map<any, any> = new Map().set('', 0);
+    // private items: Array<Object> = [];
+    private lineItemList: Array<LineItem> = [];
     private totalCost: number = 0;
     private totalItemsQuantity: number = 0;
-    private deliverySet: boolean = false;
+    private deliveryIsSet: boolean = false;
 
     constructor() { }
 
@@ -21,13 +23,12 @@ export class CartService {
 
     addToCart(product: any): void {
         // Stack products onto array
-        this.items.push(product);
-        this.updateItemQuantity(product, 1);
+        this.updateItemQuantity(product, 1, product.selectedSize);
         this.updateTotalCost(product.price);
 
         // TODO refactor this
         if (product.name === 'Delivery') {
-            this.deliverySet = true;
+            this.deliveryIsSet = true;
         } else {
             this.totalItemsQuantity += 1;
         }
@@ -36,22 +37,22 @@ export class CartService {
     }
 
     removeFromCart(idx: number): void {
-        let product = this.items[idx];
+        let product = this.lineItemList[idx];
         let productName = product['name'];
         let productPrice = product['price'];
-        
-        this.updateItemQuantity(product, -1);
-        this.items.splice(idx, 1);
+
+        // this.updateItemQuantity(product, -1);
+        this.lineItemList.splice(idx, 1);
 
         // TODO refactor
         if (productName === 'Delivery') {
-            this.deliverySet = false;
+            this.deliveryIsSet = false;
         } else {
             this.totalItemsQuantity -= 1;
         }
 
         // Dispose of cart contents properly when there are no items left
-        if (this.items.length == 0) {
+        if (this.lineItemList.length == 0) {
             this.clearCart();
         } else {
             // Update Cart totals accordingly
@@ -64,7 +65,7 @@ export class CartService {
     }
 
     hasDelivery(): boolean {
-        return this.deliverySet;
+        return this.deliveryIsSet;
     }
 
     updateTotalCost(cost: number): void {
@@ -73,24 +74,28 @@ export class CartService {
     }
 
     // FIXME: this needs to account product size as well as handling special products like Delivery
-    updateItemQuantity(product: any, quantity: number) {
-        let nKey: string = '';
-        let nVal: number = 0;
+    updateItemQuantity(product: any,
+        quantity: number,
+        selectedSize?: Size): void {
 
-        for (let [key, val] of this.itemQuantity) {
-            if (key == product.name) {
-                nKey = key;
-                nVal = val + quantity;
-                break;
-            } else {
-                nKey = product.name;
-                nVal = quantity;
+        // Find product of the size specified in the Lineitem list
+        const lineItem = this.lineItemList.find((item) => {
+            return (product == item.product && item.size == selectedSize) ? true : false;
+        });
+
+        // Add new product in case there is no such item of the size found
+        if (undefined === lineItem) {
+            if (quantity > 0) {
+                let lineItem: LineItem =
+                {
+                    product: product, qty: quantity, size: selectedSize
+                };
+                this.lineItemList.push(lineItem);
             }
-        };
-
-        this.itemQuantity.set(nKey, nVal);
-
-        console.log(this.itemQuantity);
+        } else {
+            // Update quantity on the item of the size found
+            lineItem.qty += quantity;
+        }
     }
 
     getTotalCost(): number {
@@ -101,16 +106,16 @@ export class CartService {
         return this.totalItemsQuantity;
     }
 
-    getItems(): Array<Object> {
-        return this.items;
+    getLineItems(): Array<Object> {
+        return this.lineItemList;
     }
 
     clearCart(): Array<Object> {
-        this.items = [];
+        this.lineItemList = [];
         this.totalCost = 0;
         this.totalItemsQuantity = 0;
         this.subject.next('Empty!');
 
-        return this.items;
+        return this.lineItemList;
     }
 }
