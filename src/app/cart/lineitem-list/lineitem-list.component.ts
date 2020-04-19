@@ -14,11 +14,13 @@ export class LineitemListComponent implements OnInit {
   public items: Array<Object> = [];
   public hasDelivery: boolean = false;
   public totalCost: number = 0;
+  public currencyCode: string = '';
 
   // TODO: fetch from backend app
   delivery: Delivery = {
     name: 'Delivery',
     price: 3.49,
+    basePrice: 3.49,
     baseCurrency: 'EUR'
   };
 
@@ -26,12 +28,14 @@ export class LineitemListComponent implements OnInit {
 
   ngOnInit(): void {
     // Update essential properties upon entering the component
+    this.currencyCode = this.cartService.getCurrencyInUse();
     this.items = this.cartService.getLineItems();
     this.totalCost = this.cartService.getTotalCost();
     this.hasDelivery = this.cartService.hasDelivery();
 
     // Get updates when Shopping Cart has some changes
     this.cartSubscription = this.cartService.getUpdates().subscribe(() => {
+      this.currencyCode = this.cartService.getCurrencyInUse();
       this.totalCost = this.cartService.getTotalCost();
       this.hasDelivery = this.cartService.hasDelivery();
     });
@@ -45,8 +49,16 @@ export class LineitemListComponent implements OnInit {
     }
   }
 
+  increaseItem(product: any): void {
+    this.cartService.addToCart(product);
+  }
+
+  deductItem(idx: number): void {
+    this.cartService.deductItem(idx);
+  }
+
   removeItem(idx: number): void {
-    this.cartService.removeFromCart(idx);
+    this.cartService.removeItem(idx);
   }
 
   checkOut(): void {
@@ -58,7 +70,7 @@ export class LineitemListComponent implements OnInit {
     this.hasDelivery = false;
   }
   
-  goHome() {
+  goHome(): void {
     this.router.navigate(['/']);
   }
 
