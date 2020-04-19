@@ -57,7 +57,7 @@ export class CartService {
             this.clearCart();
         } else {
             // Update Cart totals accordingly
-            this.updateTotalCost(-productPrice);
+            this.updateTotalCost(-productPrice * productQty);
 
             // Notify subscribers about item removed
             this.subject.next(productName + ' was removed!');
