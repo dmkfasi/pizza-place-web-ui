@@ -26,7 +26,7 @@ export class LineitemListComponent implements OnInit {
 
   ngOnInit(): void {
     // Update essential properties upon entering the component
-    this.items = this.cartService.getItems();
+    this.items = this.cartService.getLineItems();
     this.totalCost = this.cartService.getTotalCost();
     this.hasDelivery = this.cartService.hasDelivery();
 
