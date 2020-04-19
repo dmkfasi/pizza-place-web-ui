@@ -1,7 +1,7 @@
 <h3>Your Shopping Cart</h3>
 
 <div *ngIf="items.length > 0; else emptyCartBlock">
-    <table class="table-striped my-3 w-75">
+    <table class="table-striped my-3 w-100">
         <tr>
             <th scope="col">Item</th>
             <th scope="col">Price</th>
@@ -11,10 +11,10 @@
         </tr>
         <tbody>
             <tr class="cart-item" *ngFor="let item of items; index as idx">
-                <th scope="row">{{item.name}}</th>
-                <td>{{item.price | currency: item.baseCurrency}}</td>
-                <td>{{item.selectedSize.code | uppercase}}</td>
-                <td>1</td><!-- FIXME -->
+                <th scope="row">{{item.product.name}}</th>
+                <td>{{item.product.price | currency: item.product.baseCurrency}}</td>
+                <td>{{item.size.code | uppercase}}</td>
+                <td>{{item.qty}}</td>
                 <td class="text-right">
                     <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"
                         title="Remove this item" (click)="removeItem(idx)">X</button>
