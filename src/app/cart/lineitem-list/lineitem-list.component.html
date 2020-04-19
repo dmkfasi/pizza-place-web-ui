@@ -14,7 +14,15 @@
                 <th scope="row">{{item.product.name}}</th>
                 <td>{{item.product.price | currency: item.product.baseCurrency}}</td>
                 <td>{{item.size ? (item.size.code | uppercase) : ''}}</td>
-                <td>{{item.qty}}</td>
+                <td>
+                    <div *ngIf="item.product.name != 'Delivery'">
+                        <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"
+                            title="Take one down!" (click)="deductItem(idx)">-</button>
+                        {{item.qty}}
+                        <button class="btn btn-success" data-toggle="tooltip" data-placement="bottom"
+                            title="Crank it up!" (click)="increaseItem(item.product)">+</button>
+                    </div>
+                </td>
                 <td class="text-right">
                     <button class="btn btn-danger" data-toggle="tooltip" data-placement="bottom"
                         title="Remove this item" (click)="removeItem(idx)">X</button>
@@ -24,7 +32,7 @@
         <tfoot>
             <tr>
                 <th scope="row">Total</th>
-                <th>{{totalCost | currency: delivery.baseCurrency}}</th>
+                <th>{{totalCost | currency: currencyCode}}</th>
             </tr>
         </tfoot>
     </table>
